@@ -1,4 +1,14 @@
-.wrapper{
+.wrapper {
   display: flex;
   flex-direction: column;
+  gap: 34px;
+
+  & > a {
+    text-decoration: none;
+    display: flex;
+    gap: 9px
+  }
+  .active{
+    color: var(--primary);
+  }
 }

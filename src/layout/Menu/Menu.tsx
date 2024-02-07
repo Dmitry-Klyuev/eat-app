@@ -1,4 +1,4 @@
-import {Link, Outlet} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import styles from './Menu.module.scss'
 
 
@@ -6,10 +6,13 @@ import styles from './Menu.module.scss'
 export const Menu = () => {
     return (
         <div className={styles.wrapper}>
-            <Link to="/">Home</Link>
-            <Link to="/cart">Cart</Link>
-            <Link to="/about">About</Link>
-            <Outlet/>
+            <NavLink to="/" className={({isActive}) => (isActive? styles.active : '')}>
+                <img src={'/menu-icon.svg'} alt="Icon menu"/>
+                Меню</NavLink>
+            <NavLink to="/cart" className={({isActive}) => (isActive? styles.active : '')}>
+                <img src={'/cart-icon.svg'} alt=""/>
+                Корзина</NavLink>
+
         </div>
     );
 };

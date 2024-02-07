@@ -1,7 +1,9 @@
+import {Title} from "../../src/components/Title/Title.tsx";
+
 export const Cart = () => {
     return (
-        <div>
-            <h1>Cart page</h1>
-        </div>
+        <Title>
+            Корзина
+        </Title>
     );
 };

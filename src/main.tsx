@@ -3,16 +3,17 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Cart} from "../pages/Cart/Cart.tsx";
-import {LeftPanel} from "./layout/LeftPanel/LeftPanel.tsx";
+import {Main} from "./layout/Main/Main.tsx";
+import {Menu} from "../pages/Menu/Menu.tsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <LeftPanel/>,
+        element: <Main/>,
         children: [
             {
-                path: 'about',
-                element: <h1>О нас</h1>
+                path: '/',
+                element: <Menu/>
             },
             {
                 path: 'cart',
@@ -30,6 +31,6 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}/>
     </React.StrictMode>,
 )
