@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Cart} from "../pages/Cart/Cart.tsx";
-import {Main} from "./layout/Main/Main.tsx";
-import {Menu} from "../pages/Menu/Menu.tsx";
+import {Main} from "../pages/Main/Main.tsx";
+import {Layout} from "./layout/Layout/Layout.tsx";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Main/>,
+        element: <Layout/>,
         children: [
             {
                 path: '/',
-                element: <Menu/>
+                element: <Main/>
             },
             {
                 path: 'cart',

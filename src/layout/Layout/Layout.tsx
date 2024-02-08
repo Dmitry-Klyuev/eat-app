@@ -1,11 +1,13 @@
-import styles from './LeftPanel.module.scss';
+import styles from './Layout.module.scss';
 import {Menu} from "../Menu/Menu.tsx";
 import avatar from '../../assets/Avatar.png'
 import {Button} from "../../components/Button/Button.tsx";
+import {Outlet} from "react-router-dom";
 
-export const LeftPanel = () => {
+export const Layout = () => {
     return (
-        <section className={styles.wrapper}>
+        <div className={styles.wrapper}>
+        <aside className={styles.aside}>
             <div className={styles.user_info}>
                 <img src={avatar} alt="avatar"/>
                 <h2>Dmitry Klyuev</h2>
@@ -17,6 +19,10 @@ export const LeftPanel = () => {
             <Button className={styles.exit}>
                 <img src={'/exit-button.svg'} alt="exit"/>
                 Выход</Button>
-        </section>
+        </aside>
+        <main className={styles.main}>
+            <Outlet/>
+        </main>
+        </div>
     );
 };
