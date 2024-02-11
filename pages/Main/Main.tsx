@@ -2,6 +2,7 @@ import {FC} from 'react';
 import {Title} from "../../src/components/Title/Title";
 import {Input} from "../../src/components/Input/Input.tsx";
 import styles from './Main.module.scss';
+import {Card} from "../../src/components/Card/Card.tsx";
 
 export const Main: FC = () => {
     return (
@@ -13,6 +14,7 @@ export const Main: FC = () => {
                 <Input placeholder={'Введите блюдо или состав'} className={styles.search}/>
                 <img src={'/search-icon.svg'} alt="seracrh icon"/>
             </div>
+            <Card/>
         </div>
     );
 };
