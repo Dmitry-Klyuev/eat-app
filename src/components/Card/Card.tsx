@@ -1,25 +1,31 @@
 import styles from './Card.module.scss';
-export const Card = () => {
+import {FC} from "react";
+import {iCardProps} from "./Card.props.ts";
+import {Link} from "react-router-dom";
+
+export const Card: FC<iCardProps> = ({id, title, description, price, image, rating}) => {
     return (
-        <div className={styles.card_wrapper}>
-            <div className={styles.card_image}>
-                <img src={'/image_1.png'} alt="card" />
-                <div className={styles.price}>
-                    300 <span>₽</span>
+        <Link to={`product/${id}`} style={{'textDecoration': 'none'}}>
+            <div className={styles.card_wrapper}>
+                <div className={styles.card_image}>
+                    <img src={image} alt="card"/>
+                    <div className={styles.price}>
+                        {price} <span>₽</span>
+                    </div>
+                    <div className={styles.rating}>
+                        {rating} <img src={'/star_icon.svg'} alt="star"/>
+                    </div>
+                    <div className={styles.buy}>
+                        <img src={'/buy_icon.png'} alt="кнопка купить"/>
+                    </div>
                 </div>
-                <div className={styles.rating}>
-                    4.5 <img src={'/star_icon.svg'} alt="star" />
+                <div className={styles.card_title}>
+                    {title}
                 </div>
-                <div className={styles.buy}>
-                    <img src={'/buy_icon.png'} alt="кнопка купить"/>
+                <div className={styles.card_description}>
+                    {description}
                 </div>
             </div>
-            <div className={styles.card_title}>
-                Наслаждение
-            </div>
-            <div className={styles.card_description}>
-                Салями, руккола, помидоры, оливки
-            </div>
-        </div>
+        </Link>
     );
 };
