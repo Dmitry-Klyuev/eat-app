@@ -1,7 +1,7 @@
 export interface iCardProps {
     id: number,
-    title: string,
-    description: string,
+    name: string,
+    ingredients: string,
     price: number,
     image: string,
     rating: number,

@@ -1,9 +1,9 @@
 import styles from './Card.module.scss';
 import {FC} from "react";
-import {iCardProps} from "./Card.props.ts";
 import {Link} from "react-router-dom";
+import {iCardProps} from "./Card.props.ts";
 
-export const Card: FC<iCardProps> = ({id, title, description, price, image, rating}) => {
+export const Card: FC<iCardProps> = ({id, name, ingredients, price, image, rating}) => {
     return (
         <Link to={`product/${id}`} style={{'textDecoration': 'none'}}>
             <div className={styles.card_wrapper}>
@@ -20,10 +20,10 @@ export const Card: FC<iCardProps> = ({id, title, description, price, image, rati
                     </div>
                 </div>
                 <div className={styles.card_title}>
-                    {title}
+                    {name}
                 </div>
                 <div className={styles.card_description}>
-                    {description}
+                    {ingredients}
                 </div>
             </div>
         </Link>

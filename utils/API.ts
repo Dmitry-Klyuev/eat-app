@@ -1,0 +1,1 @@
+export const Api = `https://purpleschool.ru/pizza-api-demo`;
