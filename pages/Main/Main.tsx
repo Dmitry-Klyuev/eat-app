@@ -5,20 +5,15 @@ import styles from './Main.module.scss';
 import {Card} from "../../src/components/Card/Card.tsx";
 import {Product} from "../../interfaces/product.interface.ts";
 import {Api} from "../../utils/API.ts";
+import axios from "axios";
 
 export const Main: FC = () => {
     const [products, setProducts] = useState<Product[]>([])
 
     const getMenu = async (): Promise<void> => {
         try {
-            const res = await fetch(Api + '/products');
-            if (!res.ok) {
-                return
-            }
-            const data = await res.json() as Product[];
-            console.log(data)
+            const {data} = await axios.get<Product[]>(Api + '/products')
             setProducts(data)
-
         } catch (e) {
             console.log(e)
         }
