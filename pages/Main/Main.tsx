@@ -9,43 +9,50 @@ import axios from "axios";
 
 export const Main: FC = () => {
     const [products, setProducts] = useState<Product[]>([])
+    const [loading, setLoading] = useState<boolean>(false);
 
     const getMenu = async (): Promise<void> => {
         try {
+            setLoading(true);
             const {data} = await axios.get<Product[]>(Api + '/products')
             setProducts(data)
         } catch (e) {
             console.log(e)
+        } finally {
+            setLoading(false)
         }
     }
-        useEffect(() => {
-            getMenu()
-        }, []);
+    useEffect(() => {
+        getMenu()
+    }, []);
 
-        return (
-            <>
-                <div className={styles.main}>
-                    <Title>
-                        Меню
-                    </Title>
-                    <div className={styles['input_wrapper']}>
-                        <Input placeholder={'Введите блюдо или состав'} className={styles.search}/>
-                        <img src={'/search-icon.svg'} alt="seracrh icon"/>
-                    </div>
+    return (
+        <>
 
+            <div className={styles.main}>
+                <Title>
+                    Меню
+                </Title>
+                <div className={styles['input_wrapper']}>
+                    <Input placeholder={'Введите блюдо или состав'} className={styles.search}/>
+                    <img src={'/search-icon.svg'} alt="seracrh icon"/>
                 </div>
-                {products.map(el => (
-                    <Card key={el.id}
-                          id={el.id}
-                          name={el.name}
-                          ingredients={el.ingredients.join(',')}
-                          price={el.price}
-                          image={el.image}
-                          rating={el.rating}
-                    />
-                ))}
 
-            </>
+            </div>
+            {loading && <h2>Loading...</h2> }
+            {!loading && products.map(el => (
+                        <Card key={el.id}
+                              id={el.id}
+                              name={el.name}
+                              ingredients={el.ingredients.join(',')}
+                              price={el.price}
+                              image={el.image}
+                              rating={el.rating}
+                        />
+                    ))
+            }
 
-        );
-    };
+        </>
+
+    );
+};
