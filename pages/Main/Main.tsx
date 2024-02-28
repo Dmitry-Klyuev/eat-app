@@ -5,25 +5,29 @@ import styles from './Main.module.scss';
 import {Card} from "../../src/components/Card/Card.tsx";
 import {Product} from "../../interfaces/product.interface.ts";
 import {Api} from "../../utils/API.ts";
-import axios from "axios";
+import axios, {AxiosError} from "axios";
 
 export const Main: FC = () => {
-    const [products, setProducts] = useState<Product[]>([])
+    const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null)
 
     const getMenu = async (): Promise<void> => {
         try {
             setLoading(true);
-            const {data} = await axios.get<Product[]>(Api + '/products')
-            setProducts(data)
+            const {data} = await axios.get<Product[]>(Api + '/products');
+            setProducts(data);
         } catch (e) {
-            console.log(e)
+            console.log(e);
+            if(e instanceof AxiosError) {
+                setError(e.message);
+            }
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
     useEffect(() => {
-        getMenu()
+        getMenu();
     }, []);
 
     return (
@@ -51,6 +55,7 @@ export const Main: FC = () => {
                         />
                     ))
             }
+            {error && <h2>{error}</h2>}
 
         </>
 
