@@ -1,11 +1,13 @@
-import React from 'react'
+import React, {lazy, Suspense} from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import {Cart} from "../pages/Cart/Cart.tsx";
-import {Main} from "../pages/Main/Main.tsx";
 import {Layout} from "./layout/Layout/Layout.tsx";
-import {ProductCard} from "./components/ProductCard/ProductCard.tsx";
+
+
+const Main: React.LazyExoticComponent<React.FC> = lazy(() => import("../pages/Main/Main.tsx"))
+const ProductCard: React.LazyExoticComponent<React.FC> = lazy(() => import("./components/ProductCard/ProductCard.tsx"))
 
 const router = createBrowserRouter([
     {
@@ -14,7 +16,9 @@ const router = createBrowserRouter([
         children: [
             {
                 path: '/',
-                element: <Main/>
+                element: <Suspense fallback={<h2>LazyLoading...</h2>}>
+                    <Main/>
+                </Suspense>
             },
             {
                 path: 'cart',
@@ -22,7 +26,10 @@ const router = createBrowserRouter([
             },
             {
                 path: '/product/:id',
-                element: <ProductCard/>
+                element:  <Suspense fallback={<h2>LazyLoading...</h2>}>
+                    <ProductCard/>
+                </Suspense>,
+                errorElement: <h1>404</h1>
             }
         ]
     },

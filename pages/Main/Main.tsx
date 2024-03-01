@@ -43,21 +43,26 @@ export const Main: FC = () => {
                 </div>
 
             </div>
-            {loading && <h2>Loading...</h2> }
-            {!loading && products.map(el => (
-                        <Card key={el.id}
-                              id={el.id}
-                              name={el.name}
-                              ingredients={el.ingredients.join(',')}
-                              price={el.price}
-                              image={el.image}
-                              rating={el.rating}
-                        />
-                    ))
-            }
-            {error && <h2>{error}</h2>}
+            <div className={styles['cards_wrapper']}>
+                {loading && <h2>Loading...</h2> }
+                {!loading && products.map(el => (
+                    <Card key={el.id}
+                          id={el.id}
+                          name={el.name}
+                          ingredients={el.ingredients.join(',')}
+                          price={el.price}
+                          image={el.image}
+                          rating={el.rating}
+                    />
+                ))
+                }
+                {error && <h2>{error}</h2>}
+            </div>
+
 
         </>
 
     );
 };
+
+export default Main
