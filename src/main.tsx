@@ -1,9 +1,12 @@
 import React, {lazy, Suspense} from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, redirect, RouterProvider} from "react-router-dom";
 import {Cart} from "../pages/Cart/Cart.tsx";
 import {Layout} from "./layout/Layout/Layout.tsx";
+import {Auth} from "./layout/Auth/Auth.tsx";
+import {Register} from "../pages/Register/Register.tsx";
+import {Login} from "../pages/Login/Login.tsx";
 
 
 const Main: React.LazyExoticComponent<React.FC> = lazy(() => import("../pages/Main/Main.tsx"))
@@ -32,6 +35,24 @@ const router = createBrowserRouter([
                 errorElement: <h1>404</h1>
             }
         ]
+    },
+    {
+      path: 'auth',
+      element: <Auth/>,
+      children: [
+          {
+              index: true,
+              loader: async () => redirect("/auth/login")
+          },
+          {
+              path: 'login',
+              element: <Login/>
+          },
+          {
+              path: 'register',
+              element: <Register/>
+          }
+      ]
     },
     {
         path: '*',
