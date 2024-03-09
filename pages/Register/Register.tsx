@@ -6,6 +6,7 @@ import {Button} from "../../src/components/Button/Button.tsx";
 import {Link} from "react-router-dom";
 
 export const Register: FC = () => {
+    console.log()
     return (
         <div className={styles['wrapper']}>
             <Title>Регистрация</Title>
