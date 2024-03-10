@@ -1,15 +1,8 @@
 .input{
-  min-width: 325px;
-  height: 65px;
-  border-radius: 10px;
+  box-sizing: border-box;
   border: 1px solid rgb(239, 239, 239);
-  background: var(--secondary);
-  box-shadow: 15px 20px 45px 0 rgba(233, 233, 233, 0.25);
-
-  font-family: "Open Sans", sans-serif;
+  border-radius: 10px;
+  background: rgb(252, 252, 253);
+  padding: 16px 30px;
   font-size: 17px;
-  font-weight: 400;
-  color: var(--text-color-light);
-  padding: 0 20px;
-
 }

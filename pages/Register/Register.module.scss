@@ -11,10 +11,25 @@
     margin-top: 31px;
     label {
       color: rgb(196, 196, 196);
+      &:not(:first-child){
+      margin-top: 15px;
+    }
     }
 
     input {
       margin-top: 5px;
+      min-width: 325px;
+      height: 65px;
+      border-radius: 10px;
+      border: 1px solid rgb(239, 239, 239);
+      background: var(--secondary);
+      box-shadow: 15px 20px 45px 0 rgba(233, 233, 233, 0.25);
+
+      font-family: "Open Sans", sans-serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--text-color-light);
+      padding: 0 20px;
       &::placeholder {
         color: rgb(196, 196, 196);
       }

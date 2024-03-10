@@ -1,37 +1,29 @@
-import {FC, SyntheticEvent} from "react";
+import {FC} from "react";
 import styles from './Register.module.scss';
 import {Title} from "../../src/components/Title/Title.tsx";
-import {Input} from "../../src/components/Input/Input.tsx";
 import {Button} from "../../src/components/Button/Button.tsx";
 import {Link} from "react-router-dom";
+import {SubmitHandler, useForm} from "react-hook-form";
 
+interface Inputs  {
+    name: string
+    email: string
+    password: string
+}
 export const Register: FC = () => {
-
-    const onSubmit = (e: SyntheticEvent) => {
-        e.preventDefault()
-        const target = e.target as typeof e.target & {
-            email: { value: string }
-            password: { value: string }
-            name: { value: string }
-        }
-        const name = target.name.value
-        const email = target.name.value
-        const password = target.password.value
-        console.log(name + email + password)
-    }
-
-    console.log()
+    const {register, handleSubmit  } = useForm<Inputs>();
+    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
     return (
         <div className={styles['wrapper']}>
             <Title>Регистрация</Title>
-            <form className={styles['form']}>
+            <form className={styles['form']} onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="email">Ваш Email</label>
-                <Input placeholder={'Email'} id={'email'} name={'email'}/>
+                <input placeholder={'Email'} id={'email'} {...register('email')}/>
                 <label htmlFor="password">Ваш пароль</label>
-                <Input placeholder={'Пароль'} id={'password'} type={'password'} name={'password'}/>
+                <input placeholder={'Пароль'} id={'password'} type={'password'} {...register('password')}/>
                 <label htmlFor="name">Ваше имя</label>
-                <Input placeholder={'Имя'} id={'name'} name={'name'}/>
-                <Button size={'large'} onClick={onSubmit}>Зарегестироваться</Button>
+                <input placeholder={'Имя'} id={'name'} {...register('name')}/>
+                <Button size={'large'} type={'submit'}>Зарегестироваться</Button>
             </form>
             <div className={styles['footer']}>
                 <span>Есть аккаунт?</span>
