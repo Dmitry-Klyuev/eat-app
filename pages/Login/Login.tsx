@@ -1,18 +1,49 @@
-import {FC} from "react";
+import {FC, useState} from "react";
 import styles from './Login.module.scss';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
+import axios, {AxiosError} from "axios";
+import {Api} from "../../utils/API.ts";
+import {LoginInterface} from "../../interfaces/Login.interface.ts";
 
 interface login {
     email: string
     password: string
 }
+
 export const Login: FC = () => {
+    const [error, setError] = useState<string | null>(null)
     const {register, handleSubmit} = useForm<login>()
-    const submit: SubmitHandler<login> = data => console.log(data)
+    const navigate = useNavigate()
+    const sendLogin = async (submitData: login) => {
+        try {
+            setError(null)
+            const {email, password} = submitData;
+            const {data} = await axios.post<LoginInterface>(`${Api}/auth/login`, {
+                email,
+                password
+            })
+            if (!data) {
+                throw new Error('Ошибка получения токена')
+            }
+            localStorage.setItem('token', data.access_token)
+            navigate('/')
+        } catch (e) {
+            if (e instanceof AxiosError) {
+                setError(e.response?.data.message);
+                setTimeout(() => {
+                    setError(null)
+                }, 3000)
+            }
+        }
+
+    }
+    const submit: SubmitHandler<login> = submitData => sendLogin(submitData)
+
 
     return (
         <div className={styles['wrapper']}>
+            {error && <div className={styles['error']}>{error}</div>}
             <form onSubmit={handleSubmit(submit)}>
                 <h2>Вход</h2>
                 <label htmlFor='email'>Ваш Email</label>

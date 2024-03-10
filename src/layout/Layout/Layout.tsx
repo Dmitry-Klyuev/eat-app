@@ -2,9 +2,15 @@ import styles from './Layout.module.scss';
 import {Menu} from "../Menu/Menu.tsx";
 import avatar from '../../assets/Avatar.png'
 import {Button} from "../../components/Button/Button.tsx";
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 
 export const Layout = () => {
+    const navigate = useNavigate()
+    const logout = () => {
+        localStorage.removeItem('token');
+        navigate('/auth/login');
+    }
+
     return (
         <div className={styles.wrapper}>
         <aside className={styles.aside}>
@@ -16,7 +22,7 @@ export const Layout = () => {
             <div className={styles.menu_wrapper}>
                 <Menu/>
             </div>
-            <Button className={styles.exit}>
+            <Button className={styles.exit} onClick={logout}>
                 <img src={'/exit-button.svg'} alt="exit"/>
                 Выход</Button>
         </aside>

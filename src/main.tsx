@@ -7,6 +7,7 @@ import {Layout} from "./layout/Layout/Layout.tsx";
 import {Auth} from "./layout/Auth/Auth.tsx";
 import {Register} from "../pages/Register/Register.tsx";
 import {Login} from "../pages/Login/Login.tsx";
+import {RequireAuthL} from "../utils/RequireAuth.tsx";
 
 
 const Main: React.LazyExoticComponent<React.FC> = lazy(() => import("../pages/Main/Main.tsx"))
@@ -15,7 +16,7 @@ const ProductCard: React.LazyExoticComponent<React.FC> = lazy(() => import("./co
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Layout/>,
+        element: <RequireAuthL><Layout/></RequireAuthL> ,
         children: [
             {
                 path: '/',
