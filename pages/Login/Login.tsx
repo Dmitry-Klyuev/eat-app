@@ -5,6 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import axios, {AxiosError} from "axios";
 import {Api} from "../../utils/API.ts";
 import {LoginInterface} from "../../interfaces/Login.interface.ts";
+import {Button} from "../../src/components/Button/Button.tsx";
 
 interface login {
     email: string
@@ -50,7 +51,7 @@ export const Login: FC = () => {
                 <input type="email" id={'email'} placeholder={'Email'} {...register('email')}/>
                 <label htmlFor='password'>Ваш пароль</label>
                 <input type="password" id={'password'} placeholder={'Пароль'} {...register('password')}/>
-                <button>Вход</button>
+                <Button size={'large'}>Вход</Button>
                 <span>Нет аккаунта?</span>
                 <Link to={'/auth/register'}>Зарегестрироваться</Link>
             </form>
