@@ -3,11 +3,16 @@ import {Menu} from "../Menu/Menu.tsx";
 import avatar from '../../assets/Avatar.png'
 import {Button} from "../../components/Button/Button.tsx";
 import {Outlet, useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../../store/store.ts";
+import {deleteToken} from "../../../store/user.slice.ts";
 
 export const Layout = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>()
     const logout = () => {
         localStorage.removeItem('token');
+        dispatch(deleteToken(null))
         navigate('/auth/login');
     }
 

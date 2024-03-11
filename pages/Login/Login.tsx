@@ -6,6 +6,9 @@ import axios, {AxiosError} from "axios";
 import {Api} from "../../utils/API.ts";
 import {LoginInterface} from "../../interfaces/Login.interface.ts";
 import {Button} from "../../src/components/Button/Button.tsx";
+import {useDispatch} from "react-redux";
+import {AppDispatch} from "../../store/store.ts";
+import {setToken} from "../../store/user.slice.ts";
 
 interface login {
     email: string
@@ -15,7 +18,8 @@ interface login {
 export const Login: FC = () => {
     const [error, setError] = useState<string | null>(null)
     const {register, handleSubmit} = useForm<login>()
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const sendLogin = async (submitData: login) => {
         try {
             setError(null)
@@ -28,6 +32,7 @@ export const Login: FC = () => {
                 throw new Error('Ошибка получения токена')
             }
             localStorage.setItem('token', data.access_token)
+            dispatch(setToken(data.access_token))
             navigate('/')
         } catch (e) {
             if (e instanceof AxiosError) {
