@@ -31,7 +31,7 @@ export const Login: FC = () => {
             if (!data) {
                 throw new Error('Ошибка получения токена')
             }
-            localStorage.setItem('token', data.access_token)
+            // localStorage.setItem('token', data.access_token)
             dispatch(setToken(data.access_token))
             navigate('/')
         } catch (e) {
