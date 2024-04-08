@@ -17,19 +17,19 @@
     color: #FFFFFF;
     top: 0;
     left: 0;
-    animation: show 3s ease-in-out;
+    animation: show 2s ease-in-out;
 
-    @keyframes show {
-      0%{
-        transform: translateY(-50px);
-      }
-      50%{
-        transform: translateY(0);
-      }
-      100%{
-        transform: translateY(-50px);
-      }
-    }
+    //@keyframes show {
+    //  0%{
+    //    transform: translateY(-50px);
+    //  }
+    //  //50%{
+    //  //  transform: translateY(0);
+    //  //}
+    //  100%{
+    //    transform: translateY(0);
+    //  }
+    //}
   }
 
   form {

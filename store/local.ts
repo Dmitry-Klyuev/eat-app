@@ -12,7 +12,7 @@ export const getToken = (key: string)=> {
 
 export const setToken = (key: string, value: string) => {
     try{
-        localStorage.setItem(key, JSON.stringify(value))
+        localStorage.setItem(key, value.toString())
     }catch (e) {
         console.error(e)
     }

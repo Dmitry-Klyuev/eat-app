@@ -5,7 +5,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {Button} from "../../src/components/Button/Button.tsx";
 import {useDispatch, useSelector} from "react-redux";
 import {AppDispatch, RootState} from "../../store/store.ts";
-import {loadToken} from "../../store/user.slice.ts";
+import {loadToken, setError} from "../../store/user.slice.ts";
 
 interface login {
     email: string
@@ -19,14 +19,18 @@ export const Login: FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
-    useEffect(()=>{
-        if (token){
+    useEffect(() => {
+        if (token) {
             navigate('/')
         }
     }, [token])
     const sendLogin = async (submitData: login) => {
-            const {email, password} = submitData;
-            dispatch(loadToken({email, password}))
+        setTimeout(() => {
+            dispatch(setError(null))
+        }, 3000)
+
+        const {email, password} = submitData;
+        dispatch(loadToken({email, password}))
     }
     const submit: SubmitHandler<login> = submitData => sendLogin(submitData)
 
