@@ -18,7 +18,8 @@ export interface userInfo {
 interface InitialState {
     token: string | null
     error: string | null
-    userInfo?: userInfo
+    userInfo: userInfo
+    registerError: string | null
 }
 
 export interface state {
@@ -37,14 +38,11 @@ export const loadUserInfo = createAsyncThunk('user/info', async (_, {getState}) 
     try {
         const state = getState() as RootState
         const token = state.user.token
-        const options = {
-            method: 'GET',
-            url: `${Api}/user/profile`,
+        const {data} = await axios.get<userInfo>(`${Api}/user/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
-        };
-        const {data} = await axios.get<userInfo>(`${Api}/user/profile`, options)
+        })
         return data
     } catch (e) {
         if (e instanceof AxiosError) {
@@ -55,9 +53,31 @@ export const loadUserInfo = createAsyncThunk('user/info', async (_, {getState}) 
 
 })
 
+export const registerUser = createAsyncThunk('user/reguster',
+    async (payload: {
+    email: string,
+    name: string,
+    password: string
+}) => {
+    try {
+    const res = await axios.post(`${Api}/auth/register`, {
+         email : payload.email, password: payload.password, name: payload.name
+    })
+        if (res.statusCode === 401){
+            throw new Error('Пользователь есть')
+        }
+        return res.data
+    }catch (e) {
+        if (e instanceof AxiosError){
+            return e.message
+        }
+    }
+
+})
 const initialState: InitialState = {
     token: getToken('token') || null,
     error: null,
+    registerError: null,
     userInfo: {}
     // token: null
 }
@@ -79,18 +99,30 @@ export const userSlice: Slice<InitialState> = createSlice({
         builder.addCase(loadToken.fulfilled, (state, action: PayloadAction<LoginInterface>): void => {
             state.error = null
             state.token = action.payload.access_token
-            console.log('token из action ' + action.payload.access_token)
             localStorage.setItem('token', action.payload.access_token)
         })
         builder.addCase(loadToken.rejected, state => {
             state.error = 'Invalid email or password'
         })
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         builder.addCase(loadUserInfo.fulfilled, (state, action: PayloadAction<userInfo>): void => {
             state.error = null
             state.userInfo = action.payload
         })
-        builder.addCase(loadUserInfo.rejected, () => {
+        builder.addCase(loadUserInfo.rejected, (state) => {
+            state.error = 'Ошибка получения пользователя'
             console.log('token rejected')
+        })
+        builder.addCase(registerUser.fulfilled, (state, action) => {
+            console.log('registered')
+            state.error = null
+            state.token = action.payload
+            localStorage.setItem('token', action.payload.access_token)
+        })
+        builder.addCase(registerUser.rejected, (state, action) => {
+            console.log(action)
+            state.registerError = action.payload
         })
 
     }

@@ -29,8 +29,8 @@ export const Layout = () => {
             <aside className={styles.aside}>
                 <div className={styles.user_info}>
                     <img src={avatar} alt="avatar"/>
-                    <h2>{userInfo?.name && 'john Doe'}</h2>
-                    <span>{userInfo?.email && 'undefined'} </span>
+                    <h2>{userInfo?.name}</h2>
+                    <span>{userInfo?.email} </span>
                 </div>
                 <div className={styles.menu_wrapper}>
                     <Menu/>

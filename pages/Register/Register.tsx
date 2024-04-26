@@ -1,9 +1,12 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import styles from './Register.module.scss';
 import {Title} from "../../src/components/Title/Title.tsx";
 import {Button} from "../../src/components/Button/Button.tsx";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {useDispatch, useSelector} from "react-redux";
+import {registerUser} from "../../store/user.slice.ts";
+import {RootState} from "../../store/store.ts";
 
 interface Inputs  {
     name: string
@@ -12,7 +15,22 @@ interface Inputs  {
 }
 export const Register: FC = () => {
     const {register, handleSubmit  } = useForm<Inputs>();
-    const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data)
+    const token = useSelector<RootState, string | null>(state => state.user.token)
+    const navigate = useNavigate();
+
+    const dispatch = useDispatch()
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        const {email, name, password} = data
+        console.log(data)
+    dispatch(registerUser( {email, name, password}))
+
+
+    }
+    useEffect(() => {
+        if (token) {
+            navigate('/')
+        }
+    }, [token])
     return (
         <div className={styles['wrapper']}>
             <Title>Регистрация</Title>
