@@ -12,6 +12,7 @@ export const Layout = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const userInfo = useSelector<RootState, userInfo | undefined>(state => state.user.userInfo)
+    const token = useSelector<RootState, string | null>(state => state.user.token)
     if (!userInfo){
         console.log('Not user info')
     }
@@ -22,7 +23,7 @@ export const Layout = () => {
     }
     useEffect(()=>{
         dispatch(loadUserInfo())
-    }, [dispatch])
+    }, [dispatch, token])
 
     return (
         <div className={styles.wrapper}>

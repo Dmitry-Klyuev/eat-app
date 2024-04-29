@@ -1,14 +1,17 @@
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {Link, useNavigate, useParams} from "react-router-dom";
+import React, {useEffect, useState} from "react";
 import axios, {AxiosError} from "axios";
 import {Api} from "../../../utils/API.ts";
 import {Product} from "../../../interfaces/product.interface.ts";
+import styles from "./ProductCard.module.scss";
+import {Button} from "../Button/Button.tsx";
 
 export const ProductCard = () => {
     const {id} = useParams()
     const [product, SetProduct] = useState<Product | null>(null)
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
+    const navigate = useNavigate();
 
     const getProduct = async (): Promise<void> => {
         try {
@@ -30,6 +33,16 @@ export const ProductCard = () => {
     useEffect(() => {
         getProduct()
     }, [id]);
+    // id:2
+    // image:"https://cdn-bucket.hb.ru-msk.vkcs.cloud/purple-images/demo/food/food2.png"
+    // ingredients:(3) ['острый перец', 'лепёшка', 'фарш']
+    // name:"Такос"
+    // price:280
+    // rating:4.8
+    const clickButton = () => {
+        navigate("/");
+    }
+
     return (
         <div>
             {error && (
@@ -39,7 +52,40 @@ export const ProductCard = () => {
 
             {!error && product && (
                 <div>
-                    {product.name}
+                    <div className={styles['headerBar']}>
+                        <div className={styles['left-header']}>
+                            <div className={styles['link']}
+                            onClick={clickButton}
+                            >
+                                {'<'}
+                            </div>
+                            <h2>{product.name}</h2>
+                        </div>
+                        <Button>
+                            В корзину
+                        </Button>
+                    </div>
+                    <div className={styles['content']}>
+                        <div className={styles['image']}>
+                            <img src={product.image} alt="eat"/>
+                        </div>
+                        <div className={styles['price']}>
+                            <div className={styles['price-text']}>
+                                <div>Цена</div>
+                                <div>{product.price} ₽</div>
+                            </div>
+                            <div>
+                                Рейтинг
+                            </div>
+                            <div>Состав:</div>
+                            <div>
+                                <ul>
+                                    {product.ingredients.map(el => <li key={el}>{el}</li>)}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             )}
         </div>

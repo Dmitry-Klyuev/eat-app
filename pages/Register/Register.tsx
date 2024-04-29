@@ -8,13 +8,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {registerUser} from "../../store/user.slice.ts";
 import {RootState} from "../../store/store.ts";
 
-interface Inputs  {
+interface Inputs {
     name: string
     email: string
     password: string
 }
+
 export const Register: FC = () => {
-    const {register, handleSubmit  } = useForm<Inputs>();
+    const {register, handleSubmit} = useForm<Inputs>();
     const token = useSelector<RootState, string | null>(state => state.user.token)
     const navigate = useNavigate();
 
@@ -22,7 +23,10 @@ export const Register: FC = () => {
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const {email, name, password} = data
         console.log(data)
-    dispatch(registerUser( {email, name, password}))
+        if (email && name && password) {
+            // @ts-ignore
+            dispatch(registerUser({email, name, password}))
+        }
 
 
     }
