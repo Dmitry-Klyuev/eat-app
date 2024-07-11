@@ -1,16 +1,18 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {userReducer} from "./user.slice.ts";
 import {setToken} from "./local.ts";
+import {cartReducers} from "./cart.slice.ts";
 
 export const store = configureStore({
     reducer: {
-       user: userReducer
+        user: userReducer,
+        count: cartReducers
     }
 })
 
-store.subscribe(() =>{
+store.subscribe(() => {
     const newToken = store.getState().user.token
-    if (newToken){
+    if (newToken) {
         setToken('token', newToken)
     }
 })

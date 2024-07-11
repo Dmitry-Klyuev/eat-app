@@ -1,5 +1,5 @@
-import {Link, useNavigate, useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { useNavigate, useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
 import axios, {AxiosError} from "axios";
 import {Api} from "../../../utils/API.ts";
 import {Product} from "../../../interfaces/product.interface.ts";
