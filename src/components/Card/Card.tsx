@@ -1,9 +1,20 @@
 import styles from './Card.module.scss';
-import {FC} from "react";
+import {FC, } from "react";
 import {Link} from "react-router-dom";
 import {iCardProps} from "./Card.props.ts";
+import {useDispatch} from "react-redux";
+import {cartActions} from "../../../store/cart.slice.ts";
 
 export const Card: FC<iCardProps> = ({id, name, ingredients, price, image, rating}) => {
+    const dispatch = useDispatch()
+
+    const addToCart = (e: MouseEvent
+    ) => {
+        e.preventDefault()
+        console.log('click')
+        dispatch(cartActions.addItem(id))
+    }
+
     return (
         <Link to={`product/${id}`} style={{'textDecoration': 'none'}}>
             <div className={styles.card_wrapper}>
@@ -15,7 +26,7 @@ export const Card: FC<iCardProps> = ({id, name, ingredients, price, image, ratin
                     <div className={styles.rating}>
                         {rating} <img src={'/star_icon.svg'} alt="star"/>
                     </div>
-                    <div className={styles.buy}>
+                    <div className={styles.buy} onClick={addToCart}>
                         <img src={'/buy_icon.png'} alt="кнопка купить"/>
                     </div>
                 </div>
