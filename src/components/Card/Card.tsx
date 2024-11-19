@@ -1,5 +1,5 @@
 import styles from './Card.module.scss';
-import {FC, } from "react";
+import React, {FC} from "react";
 import {Link} from "react-router-dom";
 import {iCardProps} from "./Card.props.ts";
 import {useDispatch} from "react-redux";
@@ -8,7 +8,7 @@ import {cartActions} from "../../../store/cart.slice.ts";
 export const Card: FC<iCardProps> = ({id, name, ingredients, price, image, rating}) => {
     const dispatch = useDispatch()
 
-    const addToCart = (e: MouseEvent
+    const addToCart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>
     ) => {
         e.preventDefault()
         console.log('click')

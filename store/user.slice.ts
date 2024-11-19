@@ -69,7 +69,6 @@ export const registerUser= createAsyncThunk('user/reguster',
             return e.response?.data.message
         }
     }
-
 })
 
 const initialState: InitialState = {
@@ -115,7 +114,7 @@ export const userSlice: Slice<InitialState> = createSlice({
             state.token = action.payload.access_token
             localStorage.setItem('token', action.payload.access_token)
         })
-        // @ts-ignore
+        // @ts-ignore 
         builder.addCase(registerUser.rejected, (state, action: PayloadAction<string>): void => {
             state.registerError = action.payload
         })
